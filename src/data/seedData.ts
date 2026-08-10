@@ -1284,7 +1284,8 @@ export function generateSeedData(): {
   }
 
   // ============== NOTIFICATIONS ==============
-  const notifications: Notification[] = [
+  // Ensure every notification has updatedAt (required by the Notification type)
+  const rawNotifications = [
     {
       id: genId(),
       userId: adminId,
@@ -1470,6 +1471,12 @@ export function generateSeedData(): {
       createdAt: subDays(TODAY, 0),
     },
   ];
+
+  // Inject updatedAt on every notification (same as createdAt for seed data)
+  const notifications: Notification[] = rawNotifications.map((n) => ({
+    ...n,
+    updatedAt: n.createdAt,
+  }));
 
   // ============== PROGRAMS ==============
   const programs: Program[] = [

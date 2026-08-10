@@ -20,7 +20,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ className }) => {
     name: currentUser
       ? `${currentUser.firstName} ${currentUser.lastName}`.trim() || currentUser.email
       : 'User',
-    role: currentUser?.role ?? 'ADMIN',
+    role: currentUser?.role as string ?? 'ADMIN',
   };
 
   const defaultWave = {
