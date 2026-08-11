@@ -13,25 +13,26 @@ import { cn } from '../../lib/cn';
 import { WaveProgressBadge } from './WaveProgressBadge';
 import { Badge } from '../ui/Badge';
 import { toast } from 'sonner';
+import { Role } from '../../types/enums';
 
 interface UserMenuProps {
   user: {
     name: string;
-    role: string;
+    role: Role;
   };
-  onRoleChange: (newRole: string) => void;
+  onRoleChange: (newRole: Role) => void;
   onSettings?: () => void;
   onLogout: () => void;
 }
 
-const ROLES = [
-  { id: 'admin', label: 'Admin' },
-  { id: 'DOCTOR', label: 'Doctor / Clinician' },
-  { id: 'NURSE', label: 'Nurse' },
-  { id: 'PHARMACIST', label: 'Pharmacist' },
-  { id: 'LAB_TECHNICIAN', label: 'Lab Technician' },
-  { id: 'RECEPTIONIST', label: 'Receptionist' },
-  { id: 'ACCOUNTANT', label: 'Accountant' },
+const ROLES: { id: Role; label: string }[] = [
+  { id: Role.ADMIN, label: 'Admin' },
+  { id: Role.DOCTOR, label: 'Doctor / Clinician' },
+  { id: Role.NURSE, label: 'Nurse' },
+  { id: Role.PHARMACIST, label: 'Pharmacist' },
+  { id: Role.LAB_TECHNICIAN, label: 'Lab Technician' },
+  { id: Role.RECEPTIONIST, label: 'Receptionist' },
+  { id: Role.ACCOUNTANT, label: 'Accountant' },
 ];
 
 const UserMenu: React.FC<UserMenuProps> = ({
@@ -177,7 +178,7 @@ export interface TopBarProps {
   };
   user?: {
     name: string;
-    role: string;
+    role: Role;
   };
   className?: string;
 }
@@ -186,13 +187,13 @@ export const TopBar: React.FC<TopBarProps> = ({
   onMenuClick,
   notificationCount = 0,
   activeWave,
-  user = { name: 'John Doe', role: 'admin' },
+  user = { name: 'John Doe', role: Role.ADMIN },
   className,
 }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(user);
 
-  const handleRoleChange = (newRole: string) => {
+  const handleRoleChange = (newRole: Role) => {
     const updated = { ...currentUser, role: newRole };
     setCurrentUser(updated);
     localStorage.setItem('mediwave_user', JSON.stringify(updated));

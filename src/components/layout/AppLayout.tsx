@@ -6,6 +6,7 @@ import { TopBar } from './TopBar';
 import { Sidebar } from './Sidebar';
 import { RequireAuth } from './RequireAuth';
 import { useStore } from '../../store';
+import { Role } from '../../types/enums';
 
 export interface AppLayoutProps {
   className?: string;
@@ -20,7 +21,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ className }) => {
     name: currentUser
       ? `${currentUser.firstName} ${currentUser.lastName}`.trim() || currentUser.email
       : 'User',
-    role: currentUser?.role as string ?? 'ADMIN',
+    role: currentUser?.role ?? Role.ADMIN,
   };
 
   const defaultWave = {
